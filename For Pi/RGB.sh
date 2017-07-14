@@ -43,7 +43,7 @@ gpioPinRed=24
 gpioPinGreen=25
 gpioPinBlue=22
 defaultPollingInterval=".25"	# Value In Seconds
-
+server="http://localhost/RGB.txt"
 # Initialize some global varibles
 count=0
 gpiopins=($gpioPinRed $gpioPinGreen $gpioPinBlue)
@@ -65,7 +65,7 @@ partyB=0
 
 while true; do
     i=0
-    for j in `wget -qO- http://localhost/RGB.txt`; do
+    for j in `wget -qO-` + $server; do
         readline[$i]=$j
         i=$(($i+1))
     done
