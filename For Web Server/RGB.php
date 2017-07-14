@@ -5,13 +5,21 @@
     $green = $lines[2];
     $blue = $lines[3];
 	$brightness = $lines[4];
+	$combo = null;
+	$test = false;
     if ( isset( $_GET['submit'] ) ) {
         if ( $_GET['submit'] == "Off") {
             $submit = $_GET['submit'];
             $red = "0";
             $green = "0";
             $blue = "0";
-        } else {
+        }
+		elseif ($_GET['submit'] == "On"){
+			$test = true;
+		$combo = file_get_contents('RGB-back.txt');
+	
+		}
+		else {
             if ( isset( $_GET['R'] ) ) {
                 if ( ctype_digit( $_GET['R'] ) ) {
                     $red = $_GET['R'];
@@ -38,9 +46,19 @@
 			}
         }
     }
-    $combined = $submit . "\n" . $red . "\n" . $green . "\n" . $blue . "\n" . $brightness . "\n";
+	if($test == true){
+		$combined = $combo;
+		
+	}
+	else {
+		  $combined = $submit . "\n" . $red . "\n" . $green . "\n" . $blue . "\n" . $brightness . "\n";
+	}
+  
 //echo $combined;
     file_put_contents('RGB.txt', $combined);
+	if($red != 0 && $green != 0 && $blue != 0){
+		file_put_contents ('RGB-back.txt', $combined);
+	}
 ?>
 <!doctype html>
 <html>
@@ -137,6 +155,7 @@
                         </td>
                         <td>
                             <p><input type="submit" value="Solid" name="submit" class="hccp-rgbsubmit" /></p>
+							
                         </td>
                         <td>
                             <p><input type="submit" value="Strobe" name="submit" class="hccp-rgbsubmit" /></p>
@@ -166,7 +185,7 @@
                         <td>
                             <p><input type="submit" value="Off" name="submit" class="hccp-rgbsubmit" /></p> 
                         </td>
-                        <td></td>
+                        <td>  <p><input type="submit" value="On" name="submit" class="hccp-rgbsubmit" /></p></td>
                     </tr>
                 </table> 
                 <div class="hccp-resetdiv"></div>
