@@ -4,6 +4,7 @@
     $red = $lines[1];
     $green = $lines[2];
     $blue = $lines[3];
+	$brightness = $lines[4];
     if ( isset( $_GET['submit'] ) ) {
         if ( $_GET['submit'] == "Off") {
             $submit = $_GET['submit'];
@@ -30,9 +31,14 @@
             if ( $submit == "Solid" && $red == "0" && $green == "0" && $blue == "0" ) {
                 $submit = "Off";
             }
+			if( isset($_GET['BR'])) {
+				if ( $_GET['BR'] <= 100){
+				$brightness = $_GET['BR'];	
+				}
+			}
         }
     }
-    $combined = $submit . "\n" . $red . "\n" . $green . "\n" . $blue . "\n";
+    $combined = $submit . "\n" . $red . "\n" . $green . "\n" . $blue . "\n" . $brightness . "\n";
 //echo $combined;
     file_put_contents('RGB.txt', $combined);
 ?>
@@ -112,9 +118,10 @@
             <div class="hccp-outerdiv">
                 <div style="margin-bottom:10px;">
                     Current State: <input type="text" id="hccp-currentColor" value="" />
-                    R: <input type="text" name="R" class="hccp-rgbCurrentval" id="hccp-currentColorR" /> 
-                    G: <input type="text" name="G" class="hccp-rgbCurrentval" id="hccp-currentColorG" /> 
-                    B: <input type="text" name="B" class="hccp-rgbCurrentval" id="hccp-currentColorB" />
+                    Red: <input type="text" name="R" class="hccp-rgbCurrentval" id="hccp-currentColorR" /> 
+                    Green: <input type="text" name="G" class="hccp-rgbCurrentval" id="hccp-currentColorG" /> 
+                    Blue: <input type="text" name="B" class="hccp-rgbCurrentval" id="hccp-currentColorB" />
+					Brightness: <input type="text" name="Br" class="hccp-rgbCurrentval" id="hccp-currentColorBr" />
                 </div>
                 <canvas class="hccp-canvas" id="hccp-FindCanvasColor"></canvas>
                 <table border="0" class="hccp-innerdiv">
@@ -122,9 +129,10 @@
                         <td>
                             <p class="hccp-colorbar">Set Color: <input type="text" id="hccp-clickColor" value="" /></p>
                             <p class="hccp-colorbar">
-                                R: <input type="text" name="R" class="hccp-rgbClickval" id="hccp-clickColorR" /> 
-                                G: <input type="text" name="G" class="hccp-rgbClickval" id="hccp-clickColorG" /> 
-                                B: <input type="text" name="B" class="hccp-rgbClickval" id="hccp-clickColorB" />
+                                Red: <input type="text" name="R" class="hccp-rgbClickval" id="hccp-clickColorR" /> 
+                                Green: <input type="text" name="G" class="hccp-rgbClickval" id="hccp-clickColorG" /> 
+                                Blue: <input type="text" name="B" class="hccp-rgbClickval" id="hccp-clickColorB" />
+								Brightness: <input type="text" name="BR" class="hccp-rgbClickval" id="hccp-clickColorBr" />
                             </p>
                         </td>
                         <td>
@@ -247,13 +255,14 @@
             document.getElementById('hccp-clickColorR').value = <?php echo $red; ?>;
             document.getElementById('hccp-clickColorG').value = <?php echo $green; ?>;
             document.getElementById('hccp-clickColorB').value = <?php echo $blue; ?>;
-
+            document.getElementById('hccp-clickColorBr').value = <?php echo $brightness; ?>;
             document.getElementById('hccp-currentColor').style.color = <?php echo $clickColorColor; ?>;
             document.getElementById('hccp-currentColor').style.backgroundColor = <?php echo $clickColorBackground; ?>;
             document.getElementById('hccp-currentColor').value = <?php echo "'".$submit."'"; ?>;
             document.getElementById('hccp-currentColorR').value = <?php echo $red; ?>;
             document.getElementById('hccp-currentColorG').value = <?php echo $green; ?>;
             document.getElementById('hccp-currentColorB').value = <?php echo $blue; ?>;
+			document.getElementById('hccp-currentColorBr').value = <?php echo $brightness; ?>;
         </script>
     </body>
 </html>
