@@ -43,12 +43,12 @@ gpioPinRed=24
 gpioPinGreen=25
 gpioPinBlue=22
 defaultPollingInterval=".25"	# Value In Seconds
-server="http://localhost/RGB.txt"
+
 # Initialize some global varibles
 count=0
 gpiopins=($gpioPinRed $gpioPinGreen $gpioPinBlue)
 pollingInterval=$defaultPollingInterval
-brightness=0
+
 # Initialize global variables for fade macro
 fade=(255 0 0)
 
@@ -65,11 +65,10 @@ partyB=0
 
 while true; do
     i=0
-    for j in `wget -qO-` + $server; do
+    for j in `wget -qO- http://localhost/RGB.txt`; do
         readline[$i]=$j
         i=$(($i+1))
     done
-
     if [ ${readline[0]} == "Strobe" ]; then
         pollingInterval=".125"
         if [ ${readline[1]} == "0" ] && [ ${readline[2]} == "0" ] && [ ${readline[3]} == "0" ]; then
@@ -113,8 +112,7 @@ while true; do
     elif [ ${readline[0]} == "Solid" ]; then
         pollingInterval=$defaultPollingInterval
         count=0
-        pigs p ${gpiopins[0]} $((${readline[4]}/100*${readline[1]})) p ${gpiopins[1]} $((${readline[4]}/100*${readline[2]})) p $((${readline[4]}/100*${gpiopins[2]} ${readline[3]}))
-		
+        pigs p ${gpiopins[0]} ${readline[1]} p ${gpiopins[1]} ${readline[2]} p ${gpiopins[2]} ${readline[3]}
     elif [ ${readline[0]} == "Party" ]; then
          count=0
         while [ $partyR -eq 0 ] && [ $partyG -eq 0 ] && [ $partyB -eq 0 ] || [ $count -eq 0 ]; do
