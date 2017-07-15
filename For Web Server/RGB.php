@@ -13,11 +13,17 @@
             $red = "0";
             $green = "0";
             $blue = "0";
+			$brightness = "0";
         }
-		elseif ($_GET['submit'] == "On"){
+		else if ($_GET['submit'] == "On"){
 			$test = true;
 		$combo = file_get_contents('RGB-back.txt');
-	
+        $lines2 = file('RGB-back.txt', FILE_IGNORE_NEW_LINES );
+		$submit = $lines2[0];
+		$red = $lines2[1];
+		$green = $lines2[2];
+        $blue = $lines2[3];
+     	$brightness = $lines2[4];
 		}
 		else {
             if ( isset( $_GET['R'] ) ) {
@@ -46,13 +52,13 @@
 			}
         }
     }
-	if($test == true){
-		$combined = $combo;
-		
-	}
-	else {
-		  $combined = $submit . "\n" . $red . "\n" . $green . "\n" . $blue . "\n" . $brightness . "\n";
-	}
+	
+		$br = $brightness/100;
+	$re = $red*$br;
+	$gr = $red*$br;
+	$bl = $red*$br;
+		  $combined = $submit . "\n" . $re . "\n" . $gr . "\n" . $bl . "\n" . $brightness . "\n";
+	
   
 //echo $combined;
     file_put_contents('RGB.txt', $combined);
