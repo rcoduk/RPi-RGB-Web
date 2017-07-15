@@ -7,6 +7,8 @@
 	$brightness = $lines[4];
 	$combo = null;
 	$test = false;
+	$host= gethostname();
+	$ip = gethostbyname($host);
     if ( isset( $_GET['submit'] ) ) {
         if ( $_GET['submit'] == "Off") {
             $submit = $_GET['submit'];
@@ -55,9 +57,12 @@
 	
 		$br = $brightness/100;
 	$re = $red*$br;
-	$gr = $red*$br;
-	$bl = $red*$br;
-		  $combined = $submit . "\n" . $re . "\n" . $gr . "\n" . $bl . "\n" . $brightness . "\n";
+	$gr = $green*$br;
+	$bl = $blue*$br;
+	$r = round($re);
+	$g = round($gr);
+	$b = round($bl);
+		  $combined = $submit . "\n" . $r . "\n" . $g . "\n" . $b . "\n" . $brightness . "\n" . $ip . "\n";
 	
   
 //echo $combined;
